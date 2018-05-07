@@ -25,14 +25,15 @@ public class Unzip {
 
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
-                System.out.println(entry.getName());
                 if (entry.getName().contains("attachments")) {
+                    System.out.println(entry.getName());
                     String s = new File(entry.getName()).getName();
                     write(zip.getInputStream(entry),
                             new BufferedOutputStream(new FileOutputStream(
                                     new File("result\\screenshot\\" + s))));
                 }
                 if (entry.getName().contains("test-cases")) {
+                    System.out.println(entry.getName());
                     String s = new File(entry.getName()).getName();
                     write(zip.getInputStream(entry),
                             new BufferedOutputStream(new FileOutputStream(
@@ -46,6 +47,8 @@ public class Unzip {
     }
 
     public static void runUp() {
+        for (File myFile : new File("result\\").listFiles())
+            if (myFile.isFile()) myFile.delete();
         new File("result\\screenshot").mkdir();
     }
 

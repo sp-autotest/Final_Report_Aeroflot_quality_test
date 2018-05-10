@@ -11,16 +11,16 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
 
 
-    public static void unzip(String arg) {
-
-        File file = new File(arg);
+    public static void unzipBuild(String build) {
+        String archive = Values.buildPath + build + Values.archiveName;
+        File file = new File(archive);
         if (!file.exists() || !file.canRead()) {
             System.out.println("File cannot be read");
             return;
         }
 
         try {
-            ZipFile zip = new ZipFile(arg);
+            ZipFile zip = new ZipFile(archive);
             Enumeration entries = zip.entries();
 
             while (entries.hasMoreElements()) {
@@ -46,9 +46,15 @@ public class Unzip {
         }
     }
 
-    public static void runUp() {
+    public static void deleteFilesFromResultFolder() {
         for (File myFile : new File("result\\").listFiles())
-            if (myFile.isFile()) myFile.delete();
+            if (myFile.isFile()) {
+                boolean r = myFile.delete();
+                System.out.println("Delete file " + myFile.getName() + " " + r);
+            }
+    }
+
+    public static void makeScreenshotDir() {
         new File("result\\screenshot").mkdir();
     }
 

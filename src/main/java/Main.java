@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mycola on 03.05.2018.
@@ -8,17 +7,32 @@ public class Main {
 
 
     public static void main(String args[]) {
+        //создание пустой папки для скриншотов
+        Unzip.makeScreenshotDir();
+        Unzip.deleteFilesFromResultFolder();
 
-        String archive = Values.buildPath + "131" + Values.archiveName;
+        //очистка папки result от json-файлов
+        //распаковка скриншотов и json-файлов билдов
+        //чтение параметров запуска билдов из xml
+        for (int i=0; i<args.length; i++) {
+            Sleep(1);
+            Unzip.unzipBuild(args[i]);
+            Xml.readBuild(args[i]);
+            Unzip.deleteFilesFromResultFolder();
+        }
 
-        Unzip.runUp();
-        Unzip.unzip(archive);
-        for (File myFile : new File("result\\").listFiles())
-            if (myFile.isFile()) Json.getStatus(myFile.getPath());
 
+        System.out.println(Values.runs.toString());
+
+        //формирование результирующего Excel-файла
+        Excel.writeIntoExcel("result\\report.xlsx");
+
+    }
+
+    public static void Sleep(int time){
         try {
-            Excel.writeIntoExcel("result\\report.xlsx");
-        } catch (IOException e) {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

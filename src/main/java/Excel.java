@@ -5,10 +5,7 @@ import org.apache.poi.xssf.usermodel.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 
-import static java.awt.Color.GRAY;
-import static java.awt.Color.WHITE;
 
 /**
  * Created by mycola on 07.05.2018.
@@ -17,15 +14,25 @@ public class Excel {
 
 
     @SuppressWarnings("deprecation")
-    public static void writeIntoExcel(String file) throws FileNotFoundException, IOException {
+    public static void writeIntoExcel(String file) {
         XSSFWorkbook book = new XSSFWorkbook();
         XSSFSheet sheet = book.createSheet("Тестовые данные и результаты");
         // Создаем заголовок
         createTitle(book, sheet);
+        // Создаем группу
+        createGroup(3, book, sheet);
 
         // Записываем всё в файл
-        book.write(new FileOutputStream(file));
-        book.close();
+        try {
+            book.write(new FileOutputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            book.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void createTitle(XSSFWorkbook book, XSSFSheet sheet) {
@@ -71,14 +78,39 @@ public class Excel {
         XSSFCell c10 = titleRow2.createCell(2);
         c10.setCellStyle(style1);
         // Меняем размер столбца
-        sheet.setColumnWidth(0, 5*256); //5 characters wide
+        sheet.setColumnWidth(0, 6*256); //6 characters wide
         sheet.setColumnWidth(1, 5*256); //5 characters wide
-        sheet.setColumnWidth(2, 40*256); //40 characters wide
-        sheet.setColumnWidth(3, 15*256); //15 characters wide
-        sheet.setColumnWidth(4, 20*256); //20 characters wide
-        sheet.setColumnWidth(5, 50*256); //50 characters wide
-        sheet.setColumnWidth(6, 20*256); //20 characters wide
+        sheet.setColumnWidth(2, 50*256); //40 characters wide
+        sheet.setColumnWidth(3, 25*256); //15 characters wide
+        sheet.setColumnWidth(4, 30*256); //20 characters wide
+        sheet.setColumnWidth(5, 60*256); //50 characters wide
+        sheet.setColumnWidth(6, 30*256); //20 characters wide
+    }
 
+    private static void createGroup(int row, XSSFWorkbook book, XSSFSheet sheet) {
+        // Обьединяем ячейки в группе
+        sheet.addMergedRegion(CellRangeAddress.valueOf("$B$" + row + ":$G$" + row));
+        // Создаем стиль для группы
+        XSSFCellStyle style = createStyleForGroup(book);
+        // Создаем строку группы
+        XSSFRow groupRow = sheet.createRow(row-1);
+        // Создаем ячейки заголовка
+        XSSFCell с0 = groupRow.createCell(0);
+        с0.setCellValue("1.1");
+        с0.setCellStyle(style);
+        XSSFCell с1 = groupRow.createCell(1);
+        с1.setCellValue("Группа автотестов  - покупка билета 1 взрослый, услуги: «Полетная страховка», «Медицинская страховка» (классическая),  «Аэроэкспресс», «Бронирование отеля». Браузер - хххх, Разрешение - ххх");
+        с1.setCellStyle(style);
+        XSSFCell c2 = groupRow.createCell(2);
+        c2.setCellStyle(style);
+        XSSFCell c3 = groupRow.createCell(3);
+        c3.setCellStyle(style);
+        XSSFCell c4 = groupRow.createCell(4);
+        c4.setCellStyle(style);
+        XSSFCell c5 = groupRow.createCell(5);
+        c5.setCellStyle(style);
+        XSSFCell c6 = groupRow.createCell(6);
+        c6.setCellStyle(style);
     }
 
     private static XSSFCellStyle createStyleForTitle1(XSSFWorkbook workbook) {
@@ -118,6 +150,25 @@ public class Excel {
         style.setBorderBottom(BorderStyle.MEDIUM);
         style.setBorderLeft(BorderStyle.MEDIUM);
         style.setBorderRight(BorderStyle.MEDIUM);
+        return style;
+    }
+
+    private static XSSFCellStyle createStyleForGroup(XSSFWorkbook workbook) {
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 11);
+        font.setColor(IndexedColors.DARK_BLUE.index);
+
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style.setFillForegroundColor(IndexedColors.PALE_BLUE.index);
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setBorderRight(BorderStyle.THIN);
+
         return style;
     }
 }

@@ -6,6 +6,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Iterator;
 /**
  * Created by mycola on 03.05.2018.
@@ -13,21 +14,24 @@ import java.util.Iterator;
 
 public class Json {
 
-    public static void getStatus(String file) {
+    public static void readData(Run run, String file) {
 
         JSONParser parser = new JSONParser();
 
         try {
-
-            Object obj = parser.parse(new FileReader(file));
+            Reader fr = new FileReader(file);
+            Object obj = parser.parse(fr);
 
             JSONObject jsonObject = (JSONObject) obj;
-            //System.out.println(jsonObject);
             String fullName = (String) jsonObject.get("fullName");
-            System.out.print(fullName.substring(fullName.indexOf(".")+1) + " : ");
-            String status = (String) jsonObject.get("status");
-            System.out.println(status);
+            fullName = fullName.substring(fullName.indexOf("."));
+            String part = fullName.replaceAll("\\D+","");
+            if (part.equals(run.getPart())){
+                String status = (String) jsonObject.get("status");
+                run.setStatus(status);
+            }
 
+            fr.close();
 
             /*/ loop array
             JSONArray msg = (JSONArray) jsonObject.get("messages");

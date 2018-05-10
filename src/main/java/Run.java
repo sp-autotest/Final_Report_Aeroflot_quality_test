@@ -9,6 +9,8 @@ public class Run {
     private String part;
     private String language;
     private String status;
+    private String description;
+
 
     public String getBuild() {
         return build;
@@ -36,6 +38,10 @@ public class Run {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setBuild(String build) {
@@ -66,6 +72,10 @@ public class Run {
         this.status = status;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "\nRun{" +
@@ -76,6 +86,7 @@ public class Run {
                 ", part='" + part + '\'' +
                 ", language='" + language + '\'' +
                 ", status='" + status + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

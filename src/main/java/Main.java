@@ -15,7 +15,6 @@ public class Main {
         //распаковка скриншотов и json-файлов билдов
         //чтение параметров запуска билдов из xml
         for (int i=0; i<args.length; i++) {
-            Sleep(1);
             Unzip.unzipBuild(args[i]);
             Xml.readBuild(args[i]);
             Unzip.deleteFilesFromResultFolder();

@@ -10,6 +10,9 @@ public class Run {
     private String language;
     private String status;
     private String description;
+    private String pnr;
+    private String card;
+    private String documens;
 
 
     public String getBuild() {
@@ -44,6 +47,18 @@ public class Run {
         return description;
     }
 
+    public String getPnr() {
+        return pnr;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public String getDocumens() {
+        return documens;
+    }
+
     public void setBuild(String build) {
         this.build = build;
     }
@@ -76,6 +91,18 @@ public class Run {
         this.description = description;
     }
 
+    public void setPnr(String pnr) {
+        this.pnr = pnr;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
+    }
+
+    public void setDocumens(String documens) {
+        this.documens = documens;
+    }
+
     @Override
     public String toString() {
         return "\nRun{" +
@@ -87,6 +114,10 @@ public class Run {
                 ", language='" + language + '\'' +
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
+                ", pnr='" + pnr + '\'' +
+                ", card='" + card + '\'' +
+                ", documens='" + documens + '\'' +
                 '}';
     }
+
 }

@@ -13,4 +13,5 @@ public class Values {
     public static String xmlName = "build.xml";
 
     public static List<Run> runs = new ArrayList<>();
+
 }

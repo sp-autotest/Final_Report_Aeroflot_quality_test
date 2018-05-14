@@ -9,8 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mycola on 10.05.2018.
@@ -92,7 +90,6 @@ public class Xml {
                             }
                             if (run.getStatus() != null) break;
                         }
-
                         Values.runs.add(run);
                     }
                 }

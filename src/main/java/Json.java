@@ -2,10 +2,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.io.*;
+import java.util.Collection;
+import java.util.Set;
+
 /**
  * Created by mycola on 03.05.2018.
  */
@@ -13,7 +14,7 @@ import java.io.Reader;
 public class Json {
 
     public static void readData(Run run, String file) {
-
+        String DIR_NAME = "result\\screenshot\\";
         JSONParser parser = new JSONParser();
 
         try {
@@ -53,6 +54,33 @@ public class Json {
                             System.out.println(name1);
                         }
                         break;
+                    }
+                }
+
+                //переименование скриншотов
+                if (run.getPnr()!=null) {
+                    if (!run.getPnr().contains("null")) {
+                        FileReader fr1 = new FileReader(file);
+                        BufferedReader reader = new BufferedReader(fr1);
+                        String line;
+                        int n = 0;
+                        while ((line = reader.readLine()) != null) {
+                            if (line.contains(".png\",")) {
+                                n++;
+                                String OLD_FILENAME = line.substring(line.indexOf(":") + 3, line.indexOf(".png") + 4);
+                                String NEW_FILENAME = run.getPnr() + "_" + n + ".png";
+                                File oldFile = new File(DIR_NAME, OLD_FILENAME);
+                                File newFile = new File(DIR_NAME, NEW_FILENAME);
+                                if (oldFile.exists() && !newFile.exists()) {
+                                    if (oldFile.renameTo(newFile)) {
+                                        System.out.println("Файл переименован");
+                                    } else {
+                                        System.out.println("Файл не переименован");
+                                    }
+                                }
+                            }
+                        }
+                        fr1.close();
                     }
                 }
             }

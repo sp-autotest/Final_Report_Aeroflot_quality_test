@@ -10,6 +10,7 @@ public class Main {
         //создание пустой папки для скриншотов
         Unzip.makeScreenshotDir();
         Unzip.deleteFilesFromResultFolder();
+        Unzip.deleteFilesFromScreenshotFolder();
 
         //очистка папки result от json-файлов
         //распаковка скриншотов и json-файлов билдов

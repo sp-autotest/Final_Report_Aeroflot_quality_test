@@ -54,32 +54,16 @@ public class Unzip {
             }
     }
 
-    public static void makeScreenshotDir() {
-        new File("result\\screenshot").mkdir();
+    public static void deleteFilesFromScreenshotFolder() {
+        for (File myFile : new File("result\\screenshot\\").listFiles())
+            if (myFile.isFile()) {
+                boolean r = myFile.delete();
+                System.out.println("Delete file " + myFile.getName() + " " + r);
+            }
     }
 
-    public static void mkk(String arg) {
-        try {
-            ZipInputStream zin = new ZipInputStream(new FileInputStream(arg));
-            ZipEntry entry;
-            String name;
-            while((entry=zin.getNextEntry())!=null) {
-
-                name = entry.getName(); // получим название файла
-                System.out.println(name + "  -  " + entry.isDirectory());
-
-                // распаковка
-                /*FileOutputStream fout = new FileOutputStream("result\\" + name);
-                for (int c = zin.read(); c != -1; c = zin.read()) {
-                    fout.write(c);
-                }*/
-                //fout.flush();
-                zin.closeEntry();
-                //fout.close();
-            }
-        } catch(Exception ex){
-                System.out.println(ex.getMessage());
-        }
+    public static void makeScreenshotDir() {
+        new File("result\\screenshot").mkdir();
     }
 
     private static void write(InputStream in, OutputStream out) throws IOException {

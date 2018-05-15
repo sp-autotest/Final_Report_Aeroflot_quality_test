@@ -46,10 +46,15 @@ public class Json {
                             if (name1.contains("Номер карты:")) run.setCard(name1.substring(name1.indexOf(":")+1));
                             if (name1.equals("Документы:")) {
                                 JSONArray steps2 = (JSONArray) jsonObjectRow1.get("steps");
-                                JSONObject jsonObjectRow2 = (JSONObject) steps2.get(0);
-                                String name2 = (String) jsonObjectRow2.get("name");
-                                if (name2.equals("logDoc[]")) name2 = "не обнаружено";
-                                run.setDocumens(name2);
+                                String docs = "";
+                                for (int k=0; k<steps2.size(); k++) {
+                                    JSONObject jsonObjectRow2 = (JSONObject) steps2.get(k);
+                                    String name2 = (String) jsonObjectRow2.get("name");
+                                    if (name2.equals("logDoc[]")) name2 = "не обнаружено";
+                                    docs = docs + name2;
+                                    if ((steps2.size()-k-1) > 0) docs = docs + "\r\n";
+                                }
+                                run.setDocumens(docs);
                             }
                             System.out.println(name1);
                         }

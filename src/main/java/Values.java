@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Values {
 
-    public static String buildPath = "C:\\Jenkins\\jobs\\AeroflotFolder\\jobs\\Regress\\builds\\";
+    public static String buildPath = "C:\\Jenkins\\jobs\\Aeroflot folder\\jobs\\Regress\\builds\\";
     public static String archiveName = "\\archive\\allure-report.zip";
     public static String xmlName = "build.xml";
 

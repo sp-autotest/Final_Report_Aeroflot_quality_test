@@ -280,7 +280,7 @@ public class Excel {
         font.setColor(IndexedColors.DARK_BLUE.index);
 
         XSSFCellStyle style = book.createCellStyle();
-        style.setWrapText(true);
+        //style.setWrapText(true);
         style.setFont(font);
         style.setAlignment(HorizontalAlignment.LEFT);
         style.setVerticalAlignment(VerticalAlignment.CENTER);

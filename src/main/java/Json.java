@@ -51,8 +51,22 @@ public class Json {
                                     JSONObject jsonObjectRow2 = (JSONObject) steps2.get(k);
                                     String name2 = (String) jsonObjectRow2.get("name");
                                     if (name2.equals("logDoc[]")) name2 = "не обнаружено";
-                                    docs = docs + name2;
-                                    if ((steps2.size()-k-1) > 0) docs = docs + "\r\n";
+                                    int dots = name2.indexOf(":");
+                                    if (dots>0) {
+                                        String type = name2.substring(0, dots+1);
+                                        String doc = getNumberFromStringEnd(name2.substring(dots+1));
+                                        if (doc.length()>0) {
+                                            if (docs.contains(type)) {
+                                                name2 = ", " + doc;
+                                            } else {
+                                                name2 = type + doc;
+                                                if (docs.length() > 0) name2 = "\r\n" + name2;
+                                            }
+                                        } else name2 = "";
+                                    } else {
+                                        if ((steps2.size()-k-1) > 0) name2 = name2 + "\r\n";
+                                    }
+                                    docs = docs + name2; //НАРАЩИВАНИЕ ТЕКСТА
                                 }
                                 run.setDocumens(docs);
                             }
@@ -97,6 +111,17 @@ public class Json {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getNumberFromStringEnd(String text) {
+        String result = "";
+        for(int i=text.length()-1; i>=0; i=i-1){
+            char c = text.charAt(i);
+            if (Character.isDigit(c)) {
+                result = c + result;
+            }else break;
+        }
+        return result;
     }
 
 }

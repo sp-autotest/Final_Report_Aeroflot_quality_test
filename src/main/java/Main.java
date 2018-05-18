@@ -7,6 +7,9 @@ public class Main {
 
 
     public static void main(String args[]) {
+
+        String encoding = System.getProperty("console.encoding", "utf-8");
+        System.out.println("encoding = " + encoding);
         //создание пустой папки для скриншотов
         Unzip.makeScreenshotDir();
         Unzip.deleteFilesFromResultFolder();

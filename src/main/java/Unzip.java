@@ -11,12 +11,12 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
 
 
-    public static void unzipBuild(String build) {
+    public static boolean unzipBuild(int build) {
         String archive = Values.buildPath + build + Values.archiveName;
         File file = new File(archive);
         if (!file.exists() || !file.canRead()) {
             System.out.println("File cannot be read");
-            return;
+            return false;
         }
 
         try {
@@ -43,7 +43,9 @@ public class Unzip {
             zip.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public static void deleteFilesFromResultFolder() {

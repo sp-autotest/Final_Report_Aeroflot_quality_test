@@ -59,8 +59,8 @@ public class Run {
         return documens;
     }
 
-    public void setBuild(String build) {
-        this.build = build;
+    public void setBuild(int build) {
+        this.build = "" + build;
     }
 
     public void setBrowser(String browser) {

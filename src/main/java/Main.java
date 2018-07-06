@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -8,20 +10,22 @@ public class Main {
 
     public static void main(String args[]) {
 
+
         String encoding = System.getProperty("console.encoding", "utf-8");
         System.out.println("encoding = " + encoding);
         //создание пустой папки для скриншотов
         Unzip.makeScreenshotDir();
         Unzip.deleteFilesFromResultFolder();
         Unzip.deleteFilesFromScreenshotFolder();
+        TreeSet<Integer> builds = createBuildList(args);
 
         //очистка папки result от json-файлов
         //распаковка скриншотов и json-файлов билдов
         //чтение параметров запуска билдов из xml
-        for (int i=0; i<args.length; i++) {
-            System.out.println("\nBuild = " + args[i]);
-            Unzip.unzipBuild(args[i]);
-            Xml.readBuild(args[i]);
+        for (int build : builds) {
+            System.out.println("Build = " + build);
+            if (!Unzip.unzipBuild(build)) continue; //пропустить билд, архив которого не удалось распаковать
+            Xml.readBuild(build);
             Unzip.deleteFilesFromResultFolder();
         }
         System.out.println(Values.runs.toString());
@@ -37,6 +41,20 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static TreeSet<Integer> createBuildList(String args[]){
+        TreeSet<Integer> builds = new TreeSet<>();
+        for (int i=0; i<args.length; i++) {
+            if (args[i].contains("-")){
+                int start = Integer.parseInt(args[i].substring(0, args[i].indexOf("-")));
+                int end = Integer.parseInt(args[i].substring(args[i].indexOf("-")+1));
+                for (int j=start; j<=end; j++) builds.add(j);
+            }else {
+                builds.add(Integer.parseInt(args[i]));
+            }
+        }
+        return builds;
     }
 
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Xml {
 
 
-    public static void readBuild(String build) {
+    public static void readBuild(int build) {
         String fileName = Values.buildPath + build + "\\" + Values.xmlName;
         File f = new File(fileName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

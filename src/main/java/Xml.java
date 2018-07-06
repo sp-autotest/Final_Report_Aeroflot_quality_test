@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Xml {
 
 
-    public static void readBuild(int build) {
+    public static boolean readBuild(int build) {
         String fileName = Values.buildPath + build + "\\" + Values.xmlName;
         File f = new File(fileName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -34,6 +34,14 @@ public class Xml {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //проверка что билд не прерван
+        Element result = (Element) document.getElementsByTagName("result").item(0);
+        if (result.getTextContent().equals("ABORTED")) {
+            System.out.println("Build result is ABORTED, skipped.");
+            return false;
+        }
+
         Element parameters = (Element) document.getElementsByTagName("parameters").item(0);
 
         String browser = "";
@@ -95,6 +103,7 @@ public class Xml {
                 }
             }
         }
+        return true;
     }
 
 }

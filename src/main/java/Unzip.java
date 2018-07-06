@@ -15,7 +15,7 @@ public class Unzip {
         String archive = Values.buildPath + build + Values.archiveName;
         File file = new File(archive);
         if (!file.exists() || !file.canRead()) {
-            System.out.println("File cannot be read");
+            System.out.println("File cannot be read, skipped.");
             return false;
         }
 

@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +23,10 @@ public class Main {
         //чтение параметров запуска билдов из xml
         for (int build : builds) {
             System.out.println("Build = " + build);
-            if (!Unzip.unzipBuild(build)) continue; //пропустить билд, архив которого не удалось распаковать
+            if (!Unzip.unzipBuild(build)) {
+                Unzip.deleteFilesFromResultFolder();
+                continue; //пропустить билд, архив которого не удалось распаковать
+            }
             Xml.readBuild(build);
             Unzip.deleteFilesFromResultFolder();
         }

@@ -21,18 +21,20 @@ public class Json {
             Reader fr = new FileReader(file);
             Object obj = parser.parse(fr);
             JSONObject jsonObject = (JSONObject) obj;
-
             String fullName = (String) jsonObject.get("fullName");
             fullName = fullName.substring(fullName.indexOf("."));
             String part = fullName.replaceAll("\\D+","");
             if (part.equals(run.getPart())){
-                String status = (String) jsonObject.get("status");
-                run.setStatus(status);
+                run.setUid((String) jsonObject.get("uid"));
+                run.setStatus((String) jsonObject.get("status"));
                 String description = (String) jsonObject.get("description");
                 System.out.println("description = " + description);
                 description = description.substring(description.indexOf("билеты:"));
                 run.setDescription(description);
-
+                String message = (String) jsonObject.get("statusMessage");
+                if (null != message) {
+                    run.setMessage("Ошибка" + message.substring(message.indexOf(":")));
+                } else run.setMessage("");
                 JSONObject test = (JSONObject) jsonObject.get("testStage");
                 JSONArray steps = (JSONArray) test.get("steps");
                 for (int i=steps.size()-1; i>=0; i--) {
@@ -73,7 +75,38 @@ public class Json {
                             }
                             System.out.println(name1);
                         }
-                        break;
+                        if (run.getStatus().equals("passed")) break;
+                    }else {
+                        if (name.equals("Неблокирующие ошибки")) {
+                            run.setLastStep(name);
+                            JSONArray steps1 = (JSONArray) jsonObjectRow.get("steps");
+                            String text1 = "";
+                            String text2 = "";
+                            for (Object step : steps1) {
+                                JSONObject jsonObjectRow1 = (JSONObject) step;
+                                String err = jsonObjectRow1.get("name") + "\r\n";
+                                text1 = text1 + err;
+                                if (err.indexOf("[")>0 & err.indexOf("]")>0) {
+                                    text2 = text2 + "\r\n" + err.substring(err.indexOf("[")+1, err.indexOf("]"));
+                                }
+                            }
+                            run.setLastSubStep(text1);
+                            run.setPeriodicity(text2);
+                        } else { //запись инфы об упавшем тесте
+                            run.setLastStep(name);
+                            JSONArray steps1 = (JSONArray) jsonObjectRow.get("steps");
+                            if (steps1.size() > 0) {
+                                JSONObject jsonObjectRow1 = (JSONObject) steps1.get(steps1.size()-1);
+                                run.setLastSubStep("Шаг: " + jsonObjectRow1.get("name"));
+                                if (name.indexOf(",") >= 0) {
+                                    name = name.substring(0, name.indexOf(",")).replaceAll("\\D+", "");
+                                }
+                                if (name.length()<2) name = "0" + name;
+                                if (steps1.size()<10) name = name + "0";
+                                run.setPeriodicity(name + steps1.size());
+                            }
+                            break;
+                        }
                     }
                 }
 

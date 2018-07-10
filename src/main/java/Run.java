@@ -13,6 +13,11 @@ public class Run {
     private String pnr;
     private String card;
     private String documens;
+    private String uid;
+    private String message;
+    private String lastStep;
+    private String lastSubStep;
+    private String periodicity;
 
 
     public String getBuild() {
@@ -59,6 +64,26 @@ public class Run {
         return documens;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getLastStep() {
+        return lastStep;
+    }
+
+    public String getLastSubStep() {
+        return lastSubStep;
+    }
+
+    public String getPeriodicity() {
+        return periodicity;
+    }
+
     public void setBuild(int build) {
         this.build = "" + build;
     }
@@ -103,9 +128,29 @@ public class Run {
         this.documens = documens;
     }
 
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setLastStep(String lastStep) {
+        this.lastStep = lastStep;
+    }
+
+    public void setLastSubStep(String lastSubStep) {
+        this.lastSubStep = lastSubStep;
+    }
+
+    public void setPeriodicity(String periodicity) {
+        this.periodicity = periodicity;
+    }
+
     @Override
     public String toString() {
-        return "\nRun{" +
+        return "Run{" +
                 "build='" + build + '\'' +
                 ", browser='" + browser + '\'' +
                 ", resolution='" + resolution + '\'' +
@@ -117,6 +162,7 @@ public class Run {
                 ", pnr='" + pnr + '\'' +
                 ", card='" + card + '\'' +
                 ", documens='" + documens + '\'' +
+                ", uid='" + uid + '\'' +
                 '}';
     }
 

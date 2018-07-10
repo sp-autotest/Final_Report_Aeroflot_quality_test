@@ -33,7 +33,9 @@ public class Main {
         System.out.println(Values.runs.toString());
 
         //формирование результирующего Excel-файла
-        Excel.writeIntoExcel("result\\report.xlsx");
+        Excel.writeReportIntoExcel("result\\final_report.xlsx");
+        //формирование файла с отклонениями
+        DeviationReportExcel.writeReportIntoExcel("result\\deviation_report.xlsx");
 
     }
 

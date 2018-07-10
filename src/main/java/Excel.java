@@ -21,7 +21,7 @@ public class Excel {
 
 
     @SuppressWarnings("deprecation")
-    public static void writeIntoExcel(String file) {
+    public static void writeReportIntoExcel(String file) {
 
         // Создаем заголовок
         createTitle();

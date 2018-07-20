@@ -204,11 +204,8 @@ public class Excel {
             c1.setCellValue((n+1) + "." + (g+1) + "." + (globalRow-m+1));//номер по порядку
             c1.setCellStyle(style1);
             XSSFCell c2 = groupRow.createCell(2);
-            String lang = Values.runs.get(i).getLanguage();
-            lang = lang.substring(0, lang.indexOf(","));
-            String cur = Values.runs.get(i).getLanguage();
-            cur = cur.substring(cur.indexOf(",") + 1);
-            c2.setCellValue(getRussianLanguage(lang) + " язык интерфейса, оплата в " + cur);//язык и валюта
+            c2.setCellValue(getRussianLanguage(Values.runs.get(i).getLanguage()) +
+                    " язык интерфейса, оплата в " + Values.runs.get(i).getCurrency());//язык и валюта
             c2.setCellStyle(style1);
             XSSFCell c3 = groupRow.createCell(3);
             c3.setCellValue(Values.runs.get(i).getPnr());//PNR

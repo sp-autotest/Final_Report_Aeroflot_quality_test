@@ -3,16 +3,17 @@
  */
 public class Run {
     private String build;
-    private String browser;
-    private String resolution;
     private String area;
     private String part;
+    private String browser;
+    private String resolution;
     private String language;
+    private String currency;
     private String status;
     private String description;
     private String pnr;
     private String card;
-    private String documens;
+    private String documents;
     private String uid;
     private String message;
     private String lastStep;
@@ -44,6 +45,10 @@ public class Run {
         return language;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -61,7 +66,7 @@ public class Run {
     }
 
     public String getDocumens() {
-        return documens;
+        return documents;
     }
 
     public String getUid() {
@@ -108,6 +113,10 @@ public class Run {
         this.language = language;
     }
 
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -124,8 +133,8 @@ public class Run {
         this.card = card;
     }
 
-    public void setDocumens(String documens) {
-        this.documens = documens;
+    public void setDocumens(String documents) {
+        this.documents = documents;
     }
 
     public void setUid(String uid) {
@@ -150,20 +159,19 @@ public class Run {
 
     @Override
     public String toString() {
-        return "Run{" +
+        return "\nRun{" +
                 "build='" + build + '\'' +
-                ", browser='" + browser + '\'' +
-                ", resolution='" + resolution + '\'' +
                 ", area='" + area + '\'' +
                 ", part='" + part + '\'' +
+                ", browser='" + browser + '\'' +
+                ", resolution='" + resolution + '\'' +
                 ", language='" + language + '\'' +
+                ", currency='" + currency + '\'' +
                 ", status='" + status + '\'' +
-                ", description='" + description + '\'' +
                 ", pnr='" + pnr + '\'' +
                 ", card='" + card + '\'' +
-                ", documens='" + documens + '\'' +
                 ", uid='" + uid + '\'' +
-                '}';
+                "}";
     }
 
 }

@@ -43,64 +43,28 @@ public class Xml {
         }
 
         Element parameters = (Element) document.getElementsByTagName("parameters").item(0);
-
-        String browser = "";
-        String resolution = "";
-        String area = "";
-        String language = "";
-
         NodeList nodeList = parameters.getChildNodes();
+        String area = "";
+
         for (int i=0; i<nodeList.getLength(); i++) {
             if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-
                 Element el = (Element) nodeList.item(i);
                 String name = el.getElementsByTagName("name").item(0).getTextContent();
-                String value = el.getElementsByTagName("value").item(0).getTextContent();
-
-                switch (name) {
-                    case "browser" : {
-                        browser = value;
-                    } break;
-                    case "resolution" : {
-                        resolution = value;
-                    }break;
-                    case "area" : {
-                        area = value;
-                    }break;
-                    case "language_currency" : {
-                        language = value;
-                    }
+                if (name.equals("area")) {
+                    area = el.getElementsByTagName("value").item(0).getTextContent();
+                    break;
                 }
             }
         }
 
-        for (int i=0; i<nodeList.getLength(); i++) {
-            if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-
-                Element el = (Element) nodeList.item(i);
-                String name = el.getElementsByTagName("name").item(0).getTextContent();
-
-                if (name.contains("part")) {
-                    String value = el.getElementsByTagName("value").item(0).getTextContent();
-                    if (value.equals("true")) {
-                        Run run = new Run();
-                        run.setBuild(build);
-                        run.setBrowser(browser);
-                        run.setResolution(resolution);
-                        run.setArea(area);
-                        run.setPart(name.replaceAll("\\D+",""));
-                        run.setLanguage(language);
-
-                        //чтение результатов запуска билдов из json-файлов
-                        for (File myFile : new File("result\\").listFiles()) {
-                            if (myFile.isFile()) {
-                                Json.readData(run, myFile.getPath());
-                            }
-                            if (run.getStatus() != null) break;
-                        }
-                        Values.runs.add(run);
-                    }
-                }
+        //чтение результатов запуска билдов из json-файлов
+        for (File myFile : new File("result\\").listFiles()) {
+            if (myFile.isFile()) {
+                Run run = Json.readData(myFile.getPath());
+                if (null == run) continue;
+                run.setBuild(build);
+                run.setArea(area);
+                Values.runs.add(run);
             }
         }
         return true;

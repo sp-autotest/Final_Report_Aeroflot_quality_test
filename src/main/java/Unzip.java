@@ -26,14 +26,14 @@ public class Unzip {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
                 if (entry.getName().contains("attachments")) {
-                    System.out.println(entry.getName());
+                    //System.out.println(entry.getName());
                     String s = new File(entry.getName()).getName();
                     write(zip.getInputStream(entry),
                             new BufferedOutputStream(new FileOutputStream(
                                     new File("result\\screenshot\\" + s))));
                 }
                 if (entry.getName().contains("test-cases")) {
-                    System.out.println(entry.getName());
+                    //System.out.println(entry.getName());
                     String s = new File(entry.getName()).getName();
                     write(zip.getInputStream(entry),
                             new BufferedOutputStream(new FileOutputStream(
@@ -52,7 +52,7 @@ public class Unzip {
         for (File myFile : new File("result\\").listFiles())
             if (myFile.isFile()) {
                 boolean r = myFile.delete();
-                System.out.println("Delete file " + myFile.getName() + " " + r);
+                //System.out.println("Delete file " + myFile.getName() + " " + r);
             }
     }
 
@@ -60,7 +60,7 @@ public class Unzip {
         for (File myFile : new File("result\\screenshot\\").listFiles())
             if (myFile.isFile()) {
                 boolean r = myFile.delete();
-                System.out.println("Delete file " + myFile.getName() + " " + r);
+                //System.out.println("Delete file " + myFile.getName() + " " + r);
             }
     }
 

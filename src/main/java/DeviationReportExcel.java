@@ -134,16 +134,13 @@ public class DeviationReportExcel {
     }
 
     private static String getScenario (int i) {
-        String lang = Values.runs.get(i).getLanguage();
-        lang = lang.substring(0, lang.indexOf(","));
-        String cur = Values.runs.get(i).getLanguage();
-        cur = cur.substring(cur.indexOf(",") + 1);
         String result = "Сценарий " + Values.runs.get(i).getPart() + ", " +
                 Values.runs.get(i).getDescription() + ".\r\n" +
-                getRussianLanguage(lang) + " язык интерфейса, оплата в " + cur + ".\r\n" +
+                getRussianLanguage(Values.runs.get(i).getLanguage()) +
+                " язык интерфейса, оплата в " +
+                Values.runs.get(i).getCurrency() + ".\r\n" +
                 "Браузер - " + Values.runs.get(i).getBrowser() +
                 ", разрешение - " + Values.runs.get(i).getResolution();
-
         return result;
     }
 

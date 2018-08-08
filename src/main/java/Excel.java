@@ -17,7 +17,7 @@ public class Excel {
     private static int globalRow = 1;
     private static XSSFWorkbook book = new XSSFWorkbook();
     private static XSSFSheet sheet = book.createSheet("Тестовые данные и результаты");
-    private static List<String>[] groups = new ArrayList[4];
+    private static List<String>[] groups = new ArrayList[6];
 
 
     @SuppressWarnings("deprecation")
@@ -30,7 +30,7 @@ public class Excel {
         //Отбираем группы
         selectGroups();
 
-        for (int n=0; n<4; n++) {
+        for (int n=0; n<6; n++) {
             for (int g = 0; g < groups[n].size(); g++) {
                 // Создаем группу
                 createGroup(g, n);
@@ -148,6 +148,8 @@ public class Excel {
         List<String> groups2 = new ArrayList<>();
         List<String> groups3 = new ArrayList<>();
         List<String> groups4 = new ArrayList<>();
+        List<String> groups5 = new ArrayList<>();
+        List<String> groups6 = new ArrayList<>();
 
         for(int i=0; i<Values.runs.size(); i++) {
             String newGroup = Values.runs.get(i).getPart()+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
@@ -163,18 +165,28 @@ public class Excel {
                 } break;
                 case "4": {
                     groups4 = addNewGroup(groups4,newGroup);
-                }
+                } break;
+                case "5": {
+                    groups5 = addNewGroup(groups5,newGroup);
+                } break;
+                case "6": {
+                    groups6 = addNewGroup(groups6,newGroup);
+                } break;
             }
         }
         groups[0] = groups1;
         groups[1] = groups2;
         groups[2] = groups3;
         groups[3] = groups4;
+        groups[4] = groups5;
+        groups[5] = groups6;
 
         System.out.println("1я группа = " + groups[0].toString());
         System.out.println("2я группа = " + groups[1].toString());
         System.out.println("3я группа = " + groups[2].toString());
         System.out.println("4я группа = " + groups[3].toString());
+        System.out.println("5я группа = " + groups[4].toString());
+        System.out.println("6я группа = " + groups[5].toString());
     }
 
     private static List<String> addNewGroup(List<String> group, String newGroup){

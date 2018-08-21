@@ -111,7 +111,7 @@ public class Excel {
     private static void createGroup(int g, int n) {
         int i;
         for(i=0; i<Values.runs.size(); i++) {
-            String group = Values.runs.get(i).getPart()+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
+            String group = Values.runs.get(i).getPart();//+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
             if (group.equals(groups[n].get(g))) {
                 break;
             }
@@ -124,12 +124,12 @@ public class Excel {
         XSSFRow groupRow = sheet.createRow(globalRow-1);
         // Создаем ячейки группы
         XSSFCell с0 = groupRow.createCell(0);
-        с0.setCellValue((n+1) + "." + (g+1));
+        с0.setCellValue((n+1));// + "." + (g+1));
         с0.setCellStyle(style);
         XSSFCell с1 = groupRow.createCell(1);
-        с1.setCellValue("Группа автотестов - " + Values.runs.get(i).getDescription() +
-                        ". Браузер - "         + Values.runs.get(i).getBrowser() +
-                        ", Разрешение - "      + Values.runs.get(i).getResolution());
+        с1.setCellValue("Группа автотестов - " + Values.runs.get(i).getDescription());// +
+                        //". Браузер - "         + Values.runs.get(i).getBrowser() +
+                        //", Разрешение - "      + Values.runs.get(i).getResolution());
         с1.setCellStyle(style);
         XSSFCell c2 = groupRow.createCell(2);
         c2.setCellStyle(style);
@@ -152,7 +152,7 @@ public class Excel {
         List<String> groups6 = new ArrayList<>();
 
         for(int i=0; i<Values.runs.size(); i++) {
-            String newGroup = Values.runs.get(i).getPart()+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
+            String newGroup = Values.runs.get(i).getPart();//+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
             switch (Values.runs.get(i).getPart()) {
                 case "1": {
                     groups1 = addNewGroup(groups1,newGroup);
@@ -202,7 +202,7 @@ public class Excel {
     }
 
     private static void createRecord(int i, int g, int n, int m) {
-        String group = Values.runs.get(i).getPart()+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
+        String group = Values.runs.get(i).getPart();//+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
         if (group.equals(groups[n].get(g))) {
             // Создаем стиль для записи
             XSSFCellStyle style1 = createStyle1ForRecord();
@@ -213,11 +213,13 @@ public class Excel {
             XSSFCell c0 = groupRow.createCell(0);
             c0.setCellStyle(style1);
             XSSFCell c1 = groupRow.createCell(1);
-            c1.setCellValue((n+1) + "." + (g+1) + "." + (globalRow-m+1));//номер по порядку
+            c1.setCellValue((n+1) + "."/* + (g+1) + "."*/ + (globalRow-m+1));//номер по порядку
             c1.setCellStyle(style1);
             XSSFCell c2 = groupRow.createCell(2);
-            c2.setCellValue(getRussianLanguage(Values.runs.get(i).getLanguage()) +
-                    " язык интерфейса, оплата в " + Values.runs.get(i).getCurrency());//язык и валюта
+            c2.setCellValue(getRussianLanguage(Values.runs.get(i).getLanguage()) + " язык интерфейса" +
+                    ", оплата в " + Values.runs.get(i).getCurrency() +
+                    ",\n\rБраузер - "         + Values.runs.get(i).getBrowser() +
+                    ", Разрешение - "      + Values.runs.get(i).getResolution());
             c2.setCellStyle(style1);
             XSSFCell c3 = groupRow.createCell(3);
             c3.setCellValue(Values.runs.get(i).getPnr());//PNR

@@ -22,9 +22,7 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <compilerArgs>
-                        <arg>-encoding UTF-8</arg>
-                    </compilerArgs>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>

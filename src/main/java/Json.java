@@ -18,7 +18,8 @@ public class Json {
         JSONParser parser = new JSONParser();
         Run run = new Run();
         try {
-            Reader fr = new FileReader(file);
+            //Reader fr = new FileReader(file);
+            BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             Object obj = parser.parse(fr);
             JSONObject jsonObject = (JSONObject) obj;
             String fullName = (String) jsonObject.get("fullName");

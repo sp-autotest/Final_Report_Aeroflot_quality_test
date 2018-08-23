@@ -27,6 +27,7 @@ public class Json {
             run.setUid((String) jsonObject.get("uid"));
             run.setStatus((String) jsonObject.get("status"));
             String description = (String) jsonObject.get("description");
+            System.out.println("Description = " + description);
             description = description.substring(description.indexOf("билеты:"));
             run.setDescription(description);
             //System.out.println("description = " + description);

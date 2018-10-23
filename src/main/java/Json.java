@@ -70,8 +70,8 @@ public class Json {
                     for (int j=0; j<steps1.size(); j++) {
                         JSONObject jsonObjectRow1 = (JSONObject) steps1.get(j);
                         String name1 = (String) jsonObjectRow1.get("name");
-                        if (name1.contains("PNR:")) run.setPnr(name1.substring(name1.indexOf(" ")));
-                        if (name1.contains("Номер карты:")) run.setCard(name1.substring(name1.indexOf(":")+1));
+                        if (name1.contains("PNR:")) run.setPnr(name1.substring(name1.indexOf(":")+2));
+                        if (name1.contains("Номер карты:")) run.setCard(name1.substring(name1.indexOf(":")+2));
                         if (name1.equals("Документы:")) {
                             JSONArray steps2 = (JSONArray) jsonObjectRow1.get("steps");
                             String docs = "";

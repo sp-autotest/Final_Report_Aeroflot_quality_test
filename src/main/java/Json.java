@@ -144,7 +144,7 @@ public class Json {
                             String NEW_FILENAME;
                             String OLD_FILENAME = line.substring(line.indexOf(":") + 3, line.indexOf(".png") + 4);
                             if (run.getStatus().equals("passed")) {
-                                NEW_FILENAME = "g_" + run.getPnr() + "_" + n + ".png";
+                                NEW_FILENAME = "_" + run.getPnr() + "_" + n + ".png";
                             } else {
                                 NEW_FILENAME = run.getPnr() + "_" + n + ".png";
                             }

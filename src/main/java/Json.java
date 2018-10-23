@@ -141,8 +141,13 @@ public class Json {
                     while ((line = reader.readLine()) != null) {
                         if (line.contains(".png\",")) {
                             n++;
+                            String NEW_FILENAME;
                             String OLD_FILENAME = line.substring(line.indexOf(":") + 3, line.indexOf(".png") + 4);
-                            String NEW_FILENAME = run.getPnr() + "_" + n + ".png";
+                            if (run.getStatus().equals("passed")) {
+                                NEW_FILENAME = "g_" + run.getPnr() + "_" + n + ".png";
+                            } else {
+                                NEW_FILENAME = run.getPnr() + "_" + n + ".png";
+                            }
                             File oldFile = new File(DIR_NAME, OLD_FILENAME);
                             File newFile = new File(DIR_NAME, NEW_FILENAME);
                             if (oldFile.exists() && !newFile.exists()) {

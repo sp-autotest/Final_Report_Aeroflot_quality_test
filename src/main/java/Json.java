@@ -19,6 +19,7 @@ public class Json {
         Run run = new Run();
         try {
             //Reader fr = new FileReader(file);
+            System.out.println("\njson="+file);
             BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             Object obj = parser.parse(fr);
             JSONObject jsonObject = (JSONObject) obj;
@@ -37,6 +38,11 @@ public class Json {
                 run.setMessage("Ошибка: " + message);
             } else run.setMessage("");
             JSONArray parameters = (JSONArray) jsonObject.get("parameterValues");
+            if (parameters.size() == 0) {
+                fr.close();
+                System.out.println("Параметров запуска в JSON не обнаружено, запуск пропущен");
+                return null;
+            }
             run.setBrowser(parameters.get(0).toString());
             run.setResolution(parameters.get(1).toString());
             run.setLanguage(parameters.get(2).toString());
@@ -144,7 +150,7 @@ public class Json {
                             String NEW_FILENAME;
                             String OLD_FILENAME = line.substring(line.indexOf(":") + 3, line.indexOf(".png") + 4);
                             if (run.getStatus().equals("passed")) {
-                                NEW_FILENAME = "_" + run.getPnr() + "_" + n + ".png";
+                                NEW_FILENAME = "_" + run.getPnr().trim() + "_" + n + ".png";
                             } else {
                                 NEW_FILENAME = run.getPnr() + "_" + n + ".png";
                             }

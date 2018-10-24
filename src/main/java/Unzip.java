@@ -65,6 +65,8 @@ public class Unzip {
     }
 
     public static void makeScreenshotDir() {
+        File res = new File("result");
+        if (!res.exists()) res.mkdir();
         new File("result\\screenshot").mkdir();
     }
 

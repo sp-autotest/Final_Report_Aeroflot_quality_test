@@ -14,7 +14,7 @@ public class Convert {
     public static void pngToJpg() {
         BufferedImage bufferedImage;
         String buf;
-        System.out.print("Start converting png to jpg ");
+        System.out.println("Start converting png to jpg");
         for (File pngFile : new File(DIR_NAME).listFiles()) {
             if (pngFile.isFile()) {
                 buf = pngFile.getAbsolutePath(); // читаем текущее имя файла
@@ -31,13 +31,12 @@ public class Convert {
                         // записываем новое изображение в формате jpg
                         ImageIO.write(newBufferedImage, "jpg", new File(buf.replaceFirst(".png", ".jpg")));
                         pngFile.delete();
-                        System.out.print(".");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
-        System.out.println("\nDone!");
+        System.out.println("Done!");
     }
 }

@@ -8,8 +8,6 @@ public class Main {
 
 
     public static void main(String args[]) {
-
-
         String encoding = System.getProperty("console.encoding", "utf-8");
         System.out.println("encoding = " + encoding);
         //создание пустой папки для скриншотов
@@ -36,7 +34,7 @@ public class Main {
         Excel.writeReportIntoExcel("result\\final_report.xlsx");
         //формирование файла с отклонениями
         DeviationReportExcel.writeReportIntoExcel("result\\deviation_report.xlsx");
-
+        Convert.pngToJpg();
     }
 
     public static void Sleep(int time){

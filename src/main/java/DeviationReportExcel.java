@@ -15,6 +15,7 @@ public class DeviationReportExcel {
     public static void writeReportIntoExcel(String file) {
         createTitle();// Создаем заголовок
         for (int i = 0; i < Values.runs.size(); i++) {
+            if (Values.runs.get(i).getPart().equals("9")) continue;
             if (!Values.runs.get(i).getStatus().equals("passed"))
                 createRecord(i, createStyle1ForRecord(), createStyle2ForRecord());// Создаем строку отчета
             else if (null != Values.runs.get(i).getLastStep()) {

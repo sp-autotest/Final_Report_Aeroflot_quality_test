@@ -19,6 +19,8 @@ public class Run {
     private String lastStep;
     private String lastSubStep;
     private String periodicity;
+    private String sector;
+    private String iteration;
 
 
     public String getBuild() {
@@ -89,6 +91,14 @@ public class Run {
         return periodicity;
     }
 
+    public String getSector() {
+        return sector;
+    }
+
+    public String getIteration() {
+        return iteration;
+    }
+
     public void setBuild(int build) {
         this.build = "" + build;
     }
@@ -155,6 +165,14 @@ public class Run {
 
     public void setPeriodicity(String periodicity) {
         this.periodicity = periodicity;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+
+    public void setIteration(String iteration) {
+        this.iteration = iteration;
     }
 
     @Override

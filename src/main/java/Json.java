@@ -43,11 +43,15 @@ public class Json {
                 System.out.println("Параметров запуска в JSON не обнаружено, запуск пропущен");
                 return null;
             }
-            run.setBrowser(parameters.get(0).toString());
-            run.setResolution(parameters.get(1).toString());
-            run.setLanguage(parameters.get(2).toString());
-            run.setCurrency(parameters.get(3).toString());
-
+            if (run.getPart().equals("9")) {
+                run.setSector(parameters.get(0).toString());
+                run.setIteration(parameters.get(1).toString());
+            }else {
+                run.setBrowser(parameters.get(0).toString());
+                run.setResolution(parameters.get(1).toString());
+                run.setLanguage(parameters.get(2).toString());
+                run.setCurrency(parameters.get(3).toString());
+            }
             JSONObject test = (JSONObject) jsonObject.get("testStage");
             if (null==test) {
                 fr.close();
@@ -79,20 +83,22 @@ public class Json {
                                 JSONObject jsonObjectRow2 = (JSONObject) steps2.get(k);
                                 String name2 = (String) jsonObjectRow2.get("name");
                                 if (name2.equals("logDoc[]")) name2 = "не обнаружено";
-                                int dots = name2.indexOf(":");
-                                if (dots>0) {
-                                    String type = name2.substring(0, dots+1);
-                                    String doc = getNumberFromStringEnd(name2.substring(dots+1));
-                                    if (doc.length()>0) {
-                                        if (docs.contains(type)) {
-                                            name2 = ", " + doc;
-                                        } else {
-                                            name2 = type + doc;
-                                            if (docs.length() > 0) name2 = "\r\n" + name2;
-                                        }
-                                    } else name2 = "";
-                                } else {
-                                    if ((steps2.size()-k-1) > 0) name2 = name2 + "\r\n";
+                                if (!run.getPart().equals("9")) {
+                                    int dots = name2.indexOf(":");
+                                    if (dots > 0) {
+                                        String type = name2.substring(0, dots + 1);
+                                        String doc = getNumberFromStringEnd(name2.substring(dots + 1));
+                                        if (doc.length() > 0) {
+                                            if (docs.contains(type)) {
+                                                name2 = ", " + doc;
+                                            } else {
+                                                name2 = type + doc;
+                                                if (docs.length() > 0) name2 = "\r\n" + name2;
+                                            }
+                                        } else name2 = "";
+                                    } else {
+                                        if ((steps2.size() - k - 1) > 0) name2 = name2 + "\r\n";
+                                    }
                                 }
                                 docs = docs + name2; //НАРАЩИВАНИЕ ТЕКСТА
                             }
@@ -188,6 +194,13 @@ public class Json {
             }else break;
         }
         return result;
+    }
+
+    public static int stringIntoInt (String s) {
+        try{
+            return Integer.parseInt(s);
+        }catch (NumberFormatException ne) {System.out.println("Error string to int parsing"); }
+        return -1;
     }
 
 }

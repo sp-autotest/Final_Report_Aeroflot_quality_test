@@ -35,7 +35,7 @@ public class Main {
         //формирование файла с отклонениями
         DeviationReportExcel.writeReportIntoExcel("result\\deviation_report.xlsx");
         //формирование файла проверки даты/времени перелета (раздел 9)
-        CheckDateExcel.writeReportIntoExcel("result\\checkdate_report.xlsx");
+        //CheckDateExcel.writeReportIntoExcel("result\\checkdate_report.xlsx");
 
         Convert.pngToJpg();
     }

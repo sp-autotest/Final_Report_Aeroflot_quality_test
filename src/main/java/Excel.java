@@ -2,7 +2,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Excel {
     private static int globalRow = 1;
     private static XSSFWorkbook book = new XSSFWorkbook();
     private static XSSFSheet sheet = book.createSheet("Тестовые данные и результаты");
-    private static List<String>[] groups = new ArrayList[6];
+    private static List<String>[] groups = new ArrayList[9];
 
 
     @SuppressWarnings("deprecation")
@@ -30,7 +29,7 @@ public class Excel {
         //Отбираем группы
         selectGroups();
 
-        for (int n=0; n<6; n++) {
+        for (int n=0; n<8; n++) {
             for (int g = 0; g < groups[n].size(); g++) {
                 // Создаем группу
                 createGroup(g, n);
@@ -39,6 +38,24 @@ public class Excel {
                 int m = globalRow;
                 for (int i = 0; i < Values.runs.size(); i++) {
                     createRecord(i, g, n, m);
+                }
+            }
+        }
+
+        //из-за внутренней сортировки группу 9 формируем отдельно
+        createGroup(0, 8);
+        globalRow++;
+        int m = globalRow;
+        for (Integer s = 1; s<4; s++) {
+            for (Integer t = 1; t<9; t++) {
+                for (int i = 0; i < Values.runs.size(); i++) {
+                    Run run = Values.runs.get(i);
+                    if (run.getSector() != null
+                     && run.getIteration() != null
+                     && run.getSector().equals(s.toString())
+                     && run.getIteration().equals(t.toString())) {
+                        createRecord(i, 0, 8, m);
+                    }
                 }
             }
         }
@@ -150,10 +167,13 @@ public class Excel {
         List<String> groups4 = new ArrayList<>();
         List<String> groups5 = new ArrayList<>();
         List<String> groups6 = new ArrayList<>();
+        List<String> groups7 = new ArrayList<>();
+        List<String> groups8 = new ArrayList<>();
+        List<String> groups9 = new ArrayList<>();
 
         for(int i=0; i<Values.runs.size(); i++) {
             String newGroup = Values.runs.get(i).getPart();//+Values.runs.get(i).getBrowser()+Values.runs.get(i).getResolution();
-            switch (Values.runs.get(i).getPart()) {
+            switch (newGroup) {
                 case "1": {
                     groups1 = addNewGroup(groups1,newGroup);
                 } break;
@@ -172,6 +192,15 @@ public class Excel {
                 case "6": {
                     groups6 = addNewGroup(groups6,newGroup);
                 } break;
+                case "7": {
+                    groups7 = addNewGroup(groups7,newGroup);
+                } break;
+                case "8": {
+                    groups8 = addNewGroup(groups8,newGroup);
+                } break;
+                case "9": {
+                    groups9 = addNewGroup(groups9,newGroup);
+                } break;
             }
         }
         groups[0] = groups1;
@@ -180,13 +209,9 @@ public class Excel {
         groups[3] = groups4;
         groups[4] = groups5;
         groups[5] = groups6;
-
-        System.out.println("1я группа = " + groups[0].toString());
-        System.out.println("2я группа = " + groups[1].toString());
-        System.out.println("3я группа = " + groups[2].toString());
-        System.out.println("4я группа = " + groups[3].toString());
-        System.out.println("5я группа = " + groups[4].toString());
-        System.out.println("6я группа = " + groups[5].toString());
+        groups[6] = groups7;
+        groups[7] = groups8;
+        groups[8] = groups9;
     }
 
     private static List<String> addNewGroup(List<String> group, String newGroup){
@@ -211,26 +236,36 @@ public class Excel {
             XSSFRow groupRow = sheet.createRow(globalRow - 1);
             // Создаем ячейки записи
             XSSFCell c0 = groupRow.createCell(0);
-            c0.setCellStyle(style1);
             XSSFCell c1 = groupRow.createCell(1);
-            c1.setCellValue((n+1) + "."/* + (g+1) + "."*/ + (globalRow-m+1));//номер по порядку
-            c1.setCellStyle(style1);
             XSSFCell c2 = groupRow.createCell(2);
-            c2.setCellValue(getRussianLanguage(Values.runs.get(i).getLanguage()) + " язык интерфейса" +
-                    ", оплата в " + Values.runs.get(i).getCurrency() +
-                    ",\n\rБраузер - "         + Values.runs.get(i).getBrowser() +
-                    ", Разрешение - "      + Values.runs.get(i).getResolution());
-            c2.setCellStyle(style1);
             XSSFCell c3 = groupRow.createCell(3);
-            c3.setCellValue(Values.runs.get(i).getPnr());//PNR
-            c3.setCellStyle(style1);
             XSSFCell c4 = groupRow.createCell(4);
-            c4.setCellValue(Values.runs.get(i).getCard());//номер кредитной карты
-            c4.setCellStyle(style1);
             XSSFCell c5 = groupRow.createCell(5);
-            c5.setCellValue(Values.runs.get(i).getDocumens());//номера документов
-            c5.setCellStyle(style1);
             XSSFCell c6 = groupRow.createCell(6);
+            c0.setCellStyle(style1);
+            c1.setCellStyle(style1);
+            c2.setCellStyle(style1);
+            c3.setCellStyle(style1);
+            c4.setCellStyle(style1);
+            c5.setCellStyle(style1);
+
+            c1.setCellValue((n+1) + "." + (globalRow-m+1));//номер по порядку
+            c3.setCellValue(Values.runs.get(i).getPnr());//PNR
+            if (n == 8) {
+                c2.setCellValue("Отрезок " + Values.runs.get(i).getSector() + "; " +
+                                "Кейс " + Values.runs.get(i).getIteration() + "; " +
+                                Values.runs.get(i).getDocumens().replace("Вылет", "\n\rВылет"));
+                if (Values.runs.get(i).getMessage().contains("условию, отсутствует")) {
+                    Values.runs.get(i).setStatus("notfound");
+                }
+            } else {
+                c2.setCellValue(getRussianLanguage(Values.runs.get(i).getLanguage()) + " язык интерфейса" +
+                        ", оплата в " + Values.runs.get(i).getCurrency() +
+                        ",\n\rБраузер - " + Values.runs.get(i).getBrowser() +
+                        ", Разрешение - " + Values.runs.get(i).getResolution());
+                c5.setCellValue(Values.runs.get(i).getDocumens());//номера документов
+                c4.setCellValue(Values.runs.get(i).getCard());//номер кредитной карты
+            }
             String status = Values.runs.get(i).getStatus();
             c6.setCellValue(getRussianStatus(status));//статус
             if (status.equals("passed"))
@@ -239,6 +274,8 @@ public class Excel {
             if (status.equals("broken"))
                 style2.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.index);
             if (status.equals("skipped")) style2.setFillForegroundColor(IndexedColors.WHITE.index);
+            c6.setCellStyle(style2);
+            if (status.equals("notfound")) style2.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
             c6.setCellStyle(style2);
             globalRow++;
         }
@@ -349,6 +386,7 @@ public class Excel {
             case "failed" : return "Не пройдено";
             case "broken" : return "Сломано";
             case "skipped" : return "Пропущено";
+            case "notfound" : return "Перелет отсутствует";
         }
         return "Неизвестно";
     }

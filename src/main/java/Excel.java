@@ -43,23 +43,24 @@ public class Excel {
         }
 
         //из-за внутренней сортировки группу 9 формируем отдельно
-        createGroup(0, 8);
-        globalRow++;
-        int m = globalRow;
-        for (Integer s = 1; s<4; s++) {
-            for (Integer t = 1; t<9; t++) {
-                for (int i = 0; i < Values.runs.size(); i++) {
-                    Run run = Values.runs.get(i);
-                    if (run.getSector() != null
-                     && run.getIteration() != null
-                     && run.getSector().equals(s.toString())
-                     && run.getIteration().equals(t.toString())) {
-                        createRecord(i, 0, 8, m);
+        if (groups[8].size()>0) {
+            createGroup(0, 8);
+            globalRow++;
+            int m = globalRow;
+            for (Integer s = 1; s < 4; s++) {
+                for (Integer t = 1; t < 9; t++) {
+                    for (int i = 0; i < Values.runs.size(); i++) {
+                        Run run = Values.runs.get(i);
+                        if (run.getSector() != null
+                                && run.getIteration() != null
+                                && run.getSector().equals(s.toString())
+                                && run.getIteration().equals(t.toString())) {
+                            createRecord(i, 0, 8, m);
+                        }
                     }
                 }
             }
         }
-
         // Записываем всё в файл
         try {
             book.write(new FileOutputStream(file));

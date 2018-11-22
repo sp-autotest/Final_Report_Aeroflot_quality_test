@@ -156,9 +156,9 @@ public class Json {
                             String NEW_FILENAME;
                             String OLD_FILENAME = line.substring(line.indexOf(":") + 3, line.indexOf(".png") + 4);
                             if (run.getStatus().equals("passed")) {
-                                NEW_FILENAME = "_" + run.getPnr().trim() + "_" + n + ".png";
+                                NEW_FILENAME = "_" + run.getPart() + "_" + run.getPnr().trim() + "_" + n + ".png";
                             } else {
-                                NEW_FILENAME = run.getPnr() + "_" + n + ".png";
+                                NEW_FILENAME =  run.getPart() + "_" + run.getPnr() + "_" + n + ".png";
                             }
                             File oldFile = new File(DIR_NAME, OLD_FILENAME);
                             File newFile = new File(DIR_NAME, NEW_FILENAME);

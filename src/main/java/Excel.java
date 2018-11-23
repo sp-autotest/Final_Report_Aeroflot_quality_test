@@ -253,8 +253,9 @@ public class Excel {
             c1.setCellValue((n+1) + "." + (globalRow-m+1));//номер по порядку
             c3.setCellValue(Values.runs.get(i).getPnr());//PNR
             if (n == 8) {
-                c2.setCellValue("Отрезок " + Values.runs.get(i).getSector() + "; " +
-                                "Кейс " + Values.runs.get(i).getIteration() + "; " +
+                String sector = getSectorDescription(Values.runs.get(i).getSector());
+                String iteration = getIterationDescription(Values.runs.get(i).getIteration());
+                c2.setCellValue(sector + "\n\rКейс " + Values.runs.get(i).getIteration() + iteration + "\n\r" +
                                 Values.runs.get(i).getDocumens().replace("Вылет", "\n\rВылет"));
                 if (Values.runs.get(i).getMessage().contains("условию, отсутствует")) {
                     Values.runs.get(i).setStatus("notfound");
@@ -391,4 +392,28 @@ public class Excel {
         }
         return "Неизвестно";
     }
+
+    private static String getSectorDescription(String s) {
+        switch (s) {
+            case "1" : return "Летнее расписание 2019 года";
+            case "2" : return "Зимнее расписание 2018-2019 года";
+            case "3" : return "Летнее расписание 2019 года";
+        }
+        return "";
+    }
+
+    private static String getIterationDescription(String i) {
+        switch (i) {
+            case "1" : return " (Вылет до полуночи, прилет после полуночи, аэропорт вылета западнее Москвы (местное время меньше))";
+            case "2" : return " (Вылет до полуночи, прилет после полуночи, аэропорт вылета восточнее Москвы (местное время больше))";
+            case "3" : return " (Вылет из Москвы после полуночи, но не позднее 01:00 по Москве. Полет на запад)";
+            case "4" : return " (Вылет из Москвы после полуночи, но не позднее 01:00 по Москве. Полет на восток)";
+            case "5" : return " (Вылет из Москвы после 22:59, но не позднее 00:00 по Москве. Полет на запад)";
+            case "6" : return " (Вылет из Москвы после 22:59, но не позднее 00:00 по Москве. Полет на восток)";
+            case "7" : return " (Вылет в Москву после 22:59, но не позднее 00:59 по Москве. Полет на запад)";
+            case "8" : return " (Вылет в Москву после 22:59, но не позднее 00:59 по Москве. Полет на восток)";
+        }
+        return "";
+    }
+
 }

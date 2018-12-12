@@ -34,6 +34,8 @@ public class Main {
         Excel.writeReportIntoExcel("result\\final_report.xlsx");
         //формирование файла с отклонениями
         DeviationReportExcel.writeReportIntoExcel("result\\deviation_report.xlsx");
+        //формирование файла с неблокирующими ошибками
+        NonBlockingErrorsReportExcel.writeReportIntoExcel("result\\non_blocking_errors_report.xlsx");
         //формирование файла проверки даты/времени перелета (раздел 9)
         //CheckDateExcel.writeReportIntoExcel("result\\checkdate_report.xlsx");
 

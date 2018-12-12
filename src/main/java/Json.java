@@ -118,7 +118,7 @@ public class Json {
                             String err = jsonObjectRow1.get("name") + "\r\n";
                             text1 = text1 + err;
                             if (err.indexOf("[")>0 & err.indexOf("]")>0) {
-                                text2 = text2 + "\r\n" + err.substring(err.indexOf("[")+1, err.indexOf("]"));
+                                text2 = text2 + err.substring(err.indexOf("[")+1, err.indexOf("]")) + "\r\n";
                             }
                         }
                         run.setLastSubStep(text1);
